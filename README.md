@@ -1,90 +1,73 @@
-# Artifactory Automation 🚀
+# 🚀 Artifact Publishing Demo
 
-**Enterprise Artifact Management for Multi-Language Microservices**
-
----
-
-![Banner](https://img.shields.io/badge/Status-Production--Ready-brightgreen.svg?style=flat-square)
-![Stack](https://img.shields.io/badge/Stack-Java%20|%20Go%20|%20Docker-blue.svg?style=flat-square)
-![Artifactory](https://img.shields.io/badge/Artifacts-JFrog-orange.svg?style=flat-square)
-
-A comprehensive blueprint for **publishing, managing, and consuming artifacts** within modern CI/CD pipelines. This project demonstrates a unified workflow for **Java**, **Go**, and **Docker**, ensuring consistency and security across the ecosystem.
+**Enterprise-Grade Workflow for Secure & Automated Artifact Management**
 
 ---
 
-## 🏗️ System Architecture
+![Status](https://img.shields.io/badge/Status-Demo--Ready-brightgreen?style=for-the-badge&logo=github)
+![Language](https://img.shields.io/badge/Language-Go-00ADD8?style=for-the-badge&logo=go)
+![Automation](https://img.shields.io/badge/Automation-Jenkins-D24939?style=for-the-badge&logo=jenkins)
+
+This repository demonstrates a **production-ready blueprint** for managing microservices artifacts. Highlighting security, scalability, and automation, it serves as a best-practice guide for modern DevSecOps teams.
+
+---
+
+## 🏗️ Architecture & Workflow
+
+A streamlined flow from development to secure artifact storage and automated cleanup.
 
 ```mermaid
-graph TD
-    subgraph "Publishers"
-        TC[transaction-core Java] --> Art[JFrog Artifactory]
-        TCG[transaction-core-go] --> Art
-    end
-    subgraph "Consumers"
-        Art --> PS[payment-service]
-        Art --> US[user-auth-service]
-    end
-    style Art fill:#ff9900,stroke:#333
+graph LR
+    Dev[Developer] --> Go[Go Module]
+    Go --> Creds{cluster.json}
+    Creds --> Art[JFrog Artifactory]
+    Art --> Jenkins[Jenkins Pipeline]
+    Jenkins --> Final((Verified Artifact))
+    
+    style Art fill:#ff9900,stroke:#333,color:#fff
+    style Jenkins fill:#D24939,stroke:#333,color:#fff
 ```
 
 ---
 
-## 📂 Project Overview
+## 💡 The Problem & Solution
 
-*   **☕ transaction-core**: Java Shared Library (Gradle).
-*   **🐹 transaction-core-go**: Go Shared Library.
-*   **💳 Services**: Payment & Auth microservices consuming shared cores.
-*   **📜 scripts/**: Automation for publishing (`publish-artifact.sh`) and fetching (`fetch-artifact.sh`).
-*   **🐳 docker/**: Production-ready containerization.
+| Challenge | Our Solution |
+| :--- | :--- |
+| **Inconsistency** | Shared **Go Module** ensures uniform task execution across environments. |
+| **Security Risks** | Centralized, demo-safe **`cluster.json`** for credential management. |
+| **Manual Bottlenecks** | Optional **Jenkinsfile** for end-to-end CI/CD automation. |
+| **Workspace Clutter** | Built-in workspace cleanup strategies for ephemeral runners. |
 
 ---
 
-## 🛠️ Usage & Integration
+## 📂 Core Components
 
-### 1. Java (Gradle)
-```gradle
-repositories { maven { url "https://artifactory.demo.com/artifactory/maven-repo" } }
-dependencies { implementation 'global.demo:transaction-core:1.0.0-demo' }
-```
+*   **🐹 `transaction-core-go.go`**: The engine performing core processing, validation, and demo output.
+*   **🔐 `cluster.json`**: Secure repository for Artifactory endpoint credentials.
+*   **⚙️ `Jenkinsfile`**: Multistage pipeline for Build, Publish, and Post-build cleanup.
 
-### 2. Go
-```go
-import "github.com/demo/transaction-core-go"
-// ...
-transactioncore.ProcessTransaction("TX-DEMO-01")
-```
+---
 
-### 3. Containerization
+## 🚀 Quick Start
+
+### 1. Initialize
 ```bash
-cd docker && ./build.sh --version=1.0.0-demo
+git clone https://github.com/your-username/artifact-publishing-demo.git
+cd artifact-publishing-demo
 ```
 
----
+### 2. Configure
+Update `cluster.json` with your environment-specific credentials.
 
-## ⚙️ CI/CD Pipeline (Jenkins)
-
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Build & Test') { steps { sh './gradlew test' } }
-        stage('Publish') { 
-            steps { sh './scripts/publish-artifact.sh' } 
-        }
-    }
-    post { always { cleanWs() } }
-}
+### 3. Execute
+```bash
+go run transaction-core-go.go
 ```
 
----
-
-## 💻 Tech Stack
-
-- **Runtimes**: Java 17, Go 1.20
-- **Containerization**: Docker
-- **Orchestration**: Jenkins / GitLab CI
-- **Artifacts**: JFrog Artifactory (Simulation)
+> [!TIP]
+> Use the included **Jenkinsfile** to simulate a full enterprise CI/CD cycle including automated artifact versioning and cleanups.
 
 ---
 
-**Build Once • Publish Anywhere • Consume Securely**
+**Build Once • Publish Safely • Automate Confidently**
