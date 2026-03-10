@@ -1,0 +1,5 @@
+{
+  "artifactoryUrl": "https://artifacts.URL",
+  "artifactoryUsername": "admin",
+  "artifactoryPassword": "admin"   // change it as required
+}
