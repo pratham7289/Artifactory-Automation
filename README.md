@@ -1,4 +1,4 @@
-# 🚀 Artifact Publishing Demo
+# 🚀 Artifactory-Automation
 
 **Enterprise-Grade Workflow for Secure & Automated Artifact Management**
 
@@ -43,7 +43,10 @@ graph LR
 
 ## 📂 Core Components
 
-*   **🐹 `transaction-core-go.go`**: The engine performing core processing, validation, and demo output.
+*   **🐹 `artifactory-manager.go`**: 
+    *   Processes demo artifact/transaction data and outputs results.
+    *   Validates `cluster.json` credentials for Artifactory.
+    *   Simulates publishing and fetching artifacts with demo logs.
 *   **🔐 `cluster.json`**: Secure repository for Artifactory endpoint credentials.
 *   **⚙️ `Jenkinsfile`**: Multistage pipeline for Build, Publish, and Post-build cleanup.
 
@@ -62,11 +65,23 @@ Update `cluster.json` with your environment-specific credentials.
 
 ### 3. Execute
 ```bash
-go run transaction-core-go.go
+go run artifactory-manager.go
 ```
 
+---
+
+## ⚙️ Optional Automation
+
+Use the **Jenkinsfile** to automate the workflow:
+
+1.  **Paste the Jenkinsfile** into your Jenkins pipeline job configuration.
+2.  **Trigger the automation** to execute the following stages:
+    *   **Build**: Compiles and tests the source code.
+    *   **Publish to Artifactory**: Securely pushes versioned artifacts to the repository.
+    *   **Clean workspace**: Performed after execution to maintain agent health.
+
 > [!TIP]
-> Use the included **Jenkinsfile** to simulate a full enterprise CI/CD cycle including automated artifact versioning and cleanups.
+> Always ensure the `cleanWs()` step is included in your pipeline to prevent disk saturation on CI/CD agents.
 
 ---
 
